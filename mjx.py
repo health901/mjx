@@ -6,7 +6,7 @@ import json
 import time
 import requests
 import os
-import cookielib
+import http.cookiejar as cookielib
 import threading
 import threadpool
 import sys
@@ -37,7 +37,7 @@ class request:
         self.sellerId = id
         self.dir_path = str(self.sellerId)
         if not os.path.exists(self.dir_path):
-            os.mkdir(self.dir_path, 0755)
+            os.mkdir(self.dir_path, 755)
 
     def get_shop_page(self, index, num):
         data = {
@@ -62,7 +62,7 @@ class request:
             'data': dataJson
         }
         params = self.sign(params)
-        print '加载第' + str(index) + '页数据'
+        print('加载第' + str(index) + '页数据')
 
         fn = self.dir_path + '/' + str(index) + '.json'
         if not os.path.exists(fn):
@@ -93,13 +93,13 @@ class request:
 
     def get_cookie(self, params):
         cookies = self.cookie_obj()
-
-        if not cookies.has_key('_m_h5_tk'):
+        
+        if '_m_h5_tk' not in cookies.keys():
             html = self.session.get(self.apiUrl, params=params)
             cookies = html.cookies
             self.session.cookies.save()
             cookies = self.cookie_obj()
-            print 'cookie get'
+            print('cookie get')
 
         return cookies
 
@@ -116,10 +116,10 @@ class request:
         fp.close()
 
     def save_img(self):
-        print '开始下载图片/视频'
+        print('开始下载图片/视频')
         dir_path = self.dir_path + '/images'
         if not os.path.exists(dir_path):
-            os.mkdir(dir_path, 0755)
+            os.mkdir(dir_path, 755)
 
         i = 0
         exist = True
@@ -175,9 +175,9 @@ class request:
         if os.path.exists(path):
             return
 
-        print 'download: ' + link
+        print('download: ' + link)
         r = requests.get(link)
-        if len(r.content) <> 49:
+        if len(r.content) != 49:
             with open(path, "wb") as f:
                 f.write(r.content)
             f.close()
@@ -189,7 +189,7 @@ class request:
 
 def main():
     if len(sys.argv) < 2:
-        print '请传入店铺ID'
+        print('请传入店铺ID')
         exit(0)
 
     sellId = sys.argv[1]
@@ -198,7 +198,7 @@ def main():
     req.set_seller(sellId)
     req.get_shop_page(1, 20)
     req.save_img()
-    print '完成'
+    print('完成')
 
 
 if __name__ == '__main__':
