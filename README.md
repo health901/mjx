@@ -6,6 +6,8 @@
 
 Python版本:2.7.x
 
+Python3 查看*py3*分支
+
 # Install
 
 `pip install threadpool`
