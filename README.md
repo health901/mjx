@@ -4,11 +4,11 @@
 
 # Requirement
 
-Python版本:2.7.x
+Python版本:3.x
 
 # Install
 
-`pip install threadpool`
+`pip install requests threadpool`
 
 # Useage
 
