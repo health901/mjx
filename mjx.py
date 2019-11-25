@@ -98,7 +98,7 @@ class request:
             html = self.session.get(self.apiUrl, params=params)
             cookies = html.cookies
             self.session.cookies.save()
-            cookies = self.cookieObj()
+            cookies = self.cookie_obj()
             print 'cookie get'
 
         return cookies
